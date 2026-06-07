@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Huiyan Luo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,500;0,700;0,800;1,700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --ink: #e8e4dc;
+      --mid: #555050;
+      --line: #222;
+      --accent: #00ff88;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Share Tech Mono', monospace;
+      font-weight: 400;
+      min-height: 100vh;
+      cursor: crosshair;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; right: 0;
+      z-index: 100;
+      padding: 1.4rem 2rem;
+      display: flex;
+      gap: 2rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    nav a {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+
+    nav a:hover { color: var(--accent); }
+    nav a.active { color: var(--accent); }
+
+    .back-btn {
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 100;
+      padding: 1.4rem 2rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      cursor: pointer;
+      display: none;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      transition: color 0.15s;
+      border-left: none;
+      outline: none;
+    }
+
+    .back-btn:hover { color: var(--accent); }
+
+    /* ── VIEWS ── */
+    .view { display: none; animation: fadeIn 0.2s ease; }
+    .view.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ════════════════════════════
+       HOME VIEW
+    ════════════════════════════ */
+    .hero {
+      padding: 5.5rem 2rem 2.5rem;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: 'YAN';
+      position: absolute;
+      top: -0.15em; left: -0.02em;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(10rem, 28vw, 22rem);
+      font-weight: 800;
+      color: transparent;
+      -webkit-text-stroke: 1px #1a1a1a;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(5rem, 18vw, 14rem);
+      font-weight: 800;
+      line-height: 0.88;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .hero-name .line2 {
+      display: block;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--accent);
+      font-size: 0.55em;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: var(--mid);
+      position: relative;
+    }
+
+    .hero-sub::before { content: '> '; color: var(--accent); }
+
+    .grid-label {
+      padding: 0.8rem 2rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: var(--mid);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .grid-label::before { content: '// '; color: #333; }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .project-card {
+      position: relative;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 4/3;
+      background: #111;
+    }
+
+    .project-card:nth-child(3n) { border-right: none; }
+
+    .project-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0.6;
+      transition: opacity 0.4s ease, transform 0.5s ease;
+      filter: grayscale(60%) contrast(1.1);
+    }
+
+    .project-card:hover img { opacity: 0.25; transform: scale(1.03); }
+
+    .card-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.2rem 1.4rem;
+      background: linear-gradient(to top, rgba(13,13,13,0.97) 0%, transparent 100%);
+    }
+
+    .card-num {
+      font-size: 0.55rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+
+    .card-num::before { content: '#'; }
+
+    .card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+    }
+
+    .card-tag {
+      margin-top: 0.4rem;
+      font-size: 0.55rem;
+      letter-spacing: 0.06em;
+      color: var(--mid);
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(5px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .project-card:hover .card-tag { opacity: 1; transform: translateY(0); }
+
+    /* ════════════════════════════
+       PROJECT VIEW
+    ════════════════════════════ */
+    .project-header {
+      padding: 5.5rem 2rem 2rem;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 2rem;
+    }
+
+    .project-num-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .project-num-label::before { content: 'FILE '; color: var(--mid); }
+
+    .project-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 9rem);
+      font-weight: 800;
+      line-height: 0.88;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    .project-meta {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .meta-item {
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      color: var(--mid);
+    }
+
+    .video-section {
+      padding: 2rem;
+      border-bottom: 1px solid var(--line);
+      background: #080808;
+    }
+
+    .vimeo-wrap {
+      position: relative;
+      padding-top: 56.25%;
+      background: #000;
+      overflow: hidden;
+      outline: 1px solid var(--line);
+    }
+
+    .vimeo-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    .desc-section {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .desc-sidebar {
+      padding: 2.5rem 1.5rem 2.5rem 2rem;
+      border-right: 1px solid var(--line);
+    }
+
+    .desc-sidebar-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      color: var(--mid);
+      margin-bottom: 1.2rem;
+    }
+
+    .desc-sidebar-label::before { content: '// '; color: #2a2a2a; }
+
+    .desc-sidebar-tags { display: flex; flex-direction: column; gap: 0; }
+
+    .tag {
+      font-size: 0.58rem;
+      letter-spacing: 0.06em;
+      color: var(--mid);
+      padding: 0.5rem 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .tag::before { content: '— '; color: #2a2a2a; }
+
+    .desc-body { padding: 2.5rem 3rem 2.5rem 2.5rem; }
+
+    .desc-body p {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.8;
+      color: #999;
+      max-width: 64ch;
+      margin-bottom: 1.4rem;
+      letter-spacing: 0.01em;
+    }
+
+    .desc-body p:last-child { margin-bottom: 0; }
+    .desc-body em { font-style: normal; color: var(--accent); }
+
+    .project-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .proj-nav-link {
+      padding: 1.4rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .proj-nav-link:first-child { border-right: 1px solid var(--line); }
+    .proj-nav-link:hover { background: #111; }
+
+    .proj-nav-dir {
+      font-size: 0.55rem;
+      letter-spacing: 0.08em;
+      color: var(--mid);
+    }
+
+    .proj-nav-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    /* ════════════════════════════
+       ABOUT VIEW
+    ════════════════════════════ */
+    .page-header {
+      padding: 5.5rem 2rem 2rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .page-header h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(4rem, 12vw, 10rem);
+      font-weight: 800;
+      line-height: 0.88;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    .page-header h1 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent);
+      display: block;
+      font-size: 0.5em;
+      letter-spacing: 0.05em;
+    }
+
+    .about-wrap {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: calc(100vh - 14rem);
+    }
+
+    .sidebar {
+      border-right: 1px solid var(--line);
+      padding: 2.5rem 1.5rem 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .sidebar-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      color: var(--mid);
+      margin-bottom: 1.2rem;
+    }
+
+    .sidebar-label::before { content: '// '; color: #2a2a2a; }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.8rem 0;
+      border-top: 1px solid var(--line);
+      text-decoration: none;
+      color: var(--mid);
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.15s ease;
+    }
+
+    .sidebar-link:last-child { border-bottom: 1px solid var(--line); }
+    .sidebar-link:hover { color: var(--accent); }
+
+    .sidebar-link .icon { opacity: 0.4; flex-shrink: 0; }
+
+    .sidebar-link .arrow {
+      margin-left: auto;
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      color: var(--accent);
+    }
+
+    .sidebar-link:hover .arrow { opacity: 1; transform: translateX(0); }
+
+    .bio-col { padding: 2.5rem 3rem 2.5rem 2.5rem; }
+
+    .bio-col p {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.9;
+      color: #999;
+      max-width: 62ch;
+      margin-bottom: 1.6rem;
+      letter-spacing: 0.01em;
+    }
+
+    .bio-col p:last-child { margin-bottom: 0; }
+    .bio-col p em { font-style: normal; color: var(--accent); }
+
+    .bio-details {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .detail-item { display: flex; flex-direction: column; gap: 0.4rem; }
+
+    .detail-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.12em;
+      color: var(--mid);
+    }
+
+    .detail-label::before { content: '// '; color: #2a2a2a; }
+
+    .detail-value { font-size: 0.65rem; letter-spacing: 0.04em; color: var(--ink); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.55rem;
+      letter-spacing: 0.08em;
+      color: var(--mid);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .project-grid { grid-template-columns: repeat(2, 1fr); }
+      .project-card:nth-child(3n) { border-right: 1px solid var(--line); }
+      .project-card:nth-child(2n) { border-right: none; }
+    }
+
+    @media (max-width: 600px) {
+      .project-grid { grid-template-columns: 1fr; }
+      .project-card { border-right: none !important; aspect-ratio: 3/2; }
+      .project-header { grid-template-columns: 1fr; }
+      .project-meta { text-align: left; }
+      .desc-section { grid-template-columns: 1fr; }
+      .desc-sidebar { border-right: none; border-bottom: 1px solid var(--line); }
+      .about-wrap { grid-template-columns: 1fr; }
+      .sidebar { border-right: none; border-bottom: 1px solid var(--line); }
+      .bio-col { padding: 2rem; }
+      .bio-details { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="back-btn" id="backBtn" onclick="showHome()">← Back</button>
+
+  <nav>
+    <a onclick="showHome()" id="nav-home" class="active">Home</a>
+    <a onclick="showHome(); scrollToGrid()" id="nav-project">Project</a>
+    <a onclick="showAbout()" id="nav-about">About</a>
+  </nav>
+
+  <!-- ════════ HOME VIEW ════════ -->
+  <div class="view active" id="view-home">
+    <header class="hero">
+      <h1 class="hero-name">Yan<span class="line2">Portfolio</span></h1>
+      <p class="hero-sub">Media Arts &amp; Critical Practice — London</p>
+    </header>
+
+    <div class="grid-label" id="grid-anchor">
+      <span>Selected Works</span>
+      <span>2022 — 2026</span>
+    </div>
+
+    <main class="project-grid">
+      <div class="project-card" onclick="showProject(0)">
+        <img src="images/01.jpg" alt="MATR" onerror="this.style.opacity='0'">
+        <div class="card-info">
+          <div class="card-num">01</div>
+          <div class="card-title">MATR</div>
+          <div class="card-tag">Installation · Dual-screen</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="showProject(1)">
+        <img src="images/02.jpg" alt="Project 02" onerror="this.style.opacity='0'">
+        <div class="card-info">
+          <div class="card-num">02</div>
+          <div class="card-title">Project Title Two</div>
+          <div class="card-tag">Film · Performance</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="showProject(2)">
+        <img src="images/03.jpg" alt="Project 03" onerror="this.style.opacity='0'">
+        <div class="card-info">
+          <div class="card-num">03</div>
+          <div class="card-title">Project Title Three</div>
+          <div class="card-tag">Interactive · Web</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="showProject(3)">
+        <img src="images/04.jpg" alt="Project 04" onerror="this.style.opacity='0'">
+        <div class="card-info">
+          <div class="card-num">04</div>
+          <div class="card-title">Project Title Four</div>
+          <div class="card-tag">Research · Text</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="showProject(4)">
+        <img src="images/05.jpg" alt="Project 05" onerror="this.style.opacity='0'">
+        <div class="card-info">
+          <div class="card-num">05</div>
+          <div class="card-title">Project Title Five</div>
+          <div class="card-tag">Game · Narrative</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="showProject(5)">
+        <img src="images/06.jpg" alt="Project 06" onerror="this.style.opacity='0'">
+        <div class="card-info">
+          <div class="card-num">06</div>
+          <div class="card-title">Project Title Six</div>
+          <div class="card-tag">Video · Essay</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="showProject(6)">
+        <img src="images/07.jpg" alt="Project 07" onerror="this.style.opacity='0'">
+        <div class="card-info">
+          <div class="card-num">07</div>
+          <div class="card-title">Project Title Seven</div>
+          <div class="card-tag">Performance · Live</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="showProject(7)">
+        <img src="images/08.jpg" alt="Project 08" onerror="this.style.opacity='0'">
+        <div class="card-info">
+          <div class="card-num">08</div>
+          <div class="card-title">Project Title Eight</div>
+          <div class="card-tag">Photography · Archive</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="showProject(8)">
+        <img src="images/09.jpg" alt="Project 09" onerror="this.style.opacity='0'">
+        <div class="card-info">
+          <div class="card-num">09</div>
+          <div class="card-title">Project Title Nine</div>
+          <div class="card-tag">Sound · Installation</div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <span>© 2026 Yan</span>
+      <span>London, UK</span>
+    </footer>
+  </div>
+
+  <!-- ════════ PROJECT VIEW ════════ -->
+  <div class="view" id="view-project">
+    <header class="project-header">
+      <div>
+        <div class="project-num-label" id="proj-num">01 / 09</div>
+        <h1 class="project-title" id="proj-title">MATR</h1>
+      </div>
+      <div class="project-meta" id="proj-meta"></div>
+    </header>
+
+    <section class="video-section">
+      <div class="vimeo-wrap">
+        <iframe id="proj-video"
+          src=""
+          allowfullscreen
+          allow="autoplay; fullscreen; picture-in-picture">
+        </iframe>
+      </div>
+    </section>
+
+    <section class="desc-section">
+      <div class="desc-sidebar">
+        <div class="desc-sidebar-label">Details</div>
+        <div class="desc-sidebar-tags" id="proj-tags"></div>
+      </div>
+      <div class="desc-body" id="proj-desc"></div>
+    </section>
+
+    <nav class="project-nav">
+      <div class="proj-nav-link" id="proj-prev" onclick="navigateProject(-1)">
+        <span class="proj-nav-dir">← Previous</span>
+        <span class="proj-nav-title" id="prev-title"></span>
+      </div>
+      <div class="proj-nav-link" id="proj-next" onclick="navigateProject(1)" style="text-align:right">
+        <span class="proj-nav-dir">Next →</span>
+        <span class="proj-nav-title" id="next-title"></span>
+      </div>
+    </nav>
+
+    <footer>
+      <span>© 2026 Yan</span>
+      <span>London, UK</span>
+    </footer>
+  </div>
+
+  <!-- ════════ ABOUT VIEW ════════ -->
+  <div class="view" id="view-about">
+    <header class="page-header">
+      <h1>About<br><em>Me</em></h1>
+    </header>
+
+    <div class="about-wrap">
+      <aside class="sidebar">
+        <div class="sidebar-label">Connect</div>
+
+        <a href="cv.pdf" download class="sidebar-link">
+          <span class="icon">↓</span>
+          Download CV
+          <span class="arrow">→</span>
+        </a>
+
+        <a href="https://www.instagram.com/YOUR_HANDLE" target="_blank" rel="noopener" class="sidebar-link">
+          <span class="icon">◎</span>
+          Instagram
+          <span class="arrow">→</span>
+        </a>
+
+        <a href="mailto:your@email.com" class="sidebar-link">
+          <span class="icon">✉</span>
+          Email
+          <span class="arrow">→</span>
+        </a>
+      </aside>
+
+      <section class="bio-col">
+        <p>
+          Your name is <em>Yan</em>. You are an interdisciplinary artist and researcher working at the intersection of critical media studies, feminist theory, AI ethics, and interactive installation.
+        </p>
+        <p>
+          Your practice engages with how language, care, and relational logics are extracted and redeployed within computational systems — examining the political economy of AI discourse through installation, performance, film, and interactive text.
+        </p>
+        <p>
+          Currently based in London, you are completing an MFA programme at [Your Institution]. Your work has been shown at [Venue], [Venue], and [Venue]. You draw on theorists including Donna Haraway, Adrienne Rich, Sara Ruddick, and Simone Weil, as well as cyberfeminist and posthumanist traditions.
+        </p>
+        <p>This is a placeholder bio — replace it with your own words.</p>
+
+        <div class="bio-details">
+          <div class="detail-item">
+            <div class="detail-label">Based</div>
+            <div class="detail-value">London, UK</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Practice</div>
+            <div class="detail-value">Installation, Film, Research</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Programme</div>
+            <div class="detail-value">MFA — [Institution]</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <span>© 2026 Yan</span>
+      <span>London, UK</span>
+    </footer>
+  </div>
+
+  <script>
+    // ════════════════════════════════════════
+    // PROJECT DATA — edit everything here
+    // ════════════════════════════════════════
+    const projects = [
+      {
+        title: "MATR",
+        year: "2026",
+        medium: "Installation",
+        location: "London",
+        vimeoId: "VIMEO_ID",
+        tags: ["Dual-Screen Installation", "Interactive", "AI / Feminist Theory", "2026"],
+        description: `
+          <p><em>MATR</em> is a dual-screen installation that critiques how AI safety and alignment discourse appropriates the language of maternal instinct as a technical and rhetorical framework.</p>
+          <p>The work presents two simultaneous views: a participant navigating what appears to be an AI companionship interface, and a backend administrative panel revealing the corporate logics behind it. The piece stages a double exposure — care as product, intimacy as data.</p>
+          <p>Replace this text with your actual project description.</p>
+        `
+      },
+      {
+        title: "Project Title Two",
+        year: "2025",
+        medium: "Film",
+        location: "London",
+        vimeoId: "VIMEO_ID",
+        tags: ["Film", "Performance", "2025"],
+        description: `
+          <p><em>Project Title Two</em> — replace this with your actual project title.</p>
+          <p>Write your project description here. This can be one or several paragraphs describing the concept, process, materials, context, and significance of the work.</p>
+        `
+      },
+      {
+        title: "Project Title Three",
+        year: "2025",
+        medium: "Interactive",
+        location: "London",
+        vimeoId: "VIMEO_ID",
+        tags: ["Interactive", "Web", "2025"],
+        description: `
+          <p><em>Project Title Three</em> — replace this with your actual project title.</p>
+          <p>Write your project description here.</p>
+        `
+      },
+      {
+        title: "Project Title Four",
+        year: "2024",
+        medium: "Research",
+        location: "London",
+        vimeoId: "VIMEO_ID",
+        tags: ["Research", "Text", "2024"],
+        description: `
+          <p><em>Project Title Four</em> — replace this with your actual project title.</p>
+          <p>Write your project description here.</p>
+        `
+      },
+      {
+        title: "Project Title Five",
+        year: "2024",
+        medium: "Game",
+        location: "London",
+        vimeoId: "VIMEO_ID",
+        tags: ["Game", "Narrative", "2024"],
+        description: `
+          <p><em>Project Title Five</em> — replace this with your actual project title.</p>
+          <p>Write your project description here.</p>
+        `
+      },
+      {
+        title: "Project Title Six",
+        year: "2024",
+        medium: "Video",
+        location: "London",
+        vimeoId: "VIMEO_ID",
+        tags: ["Video", "Essay", "2024"],
+        description: `
+          <p><em>Project Title Six</em> — replace this with your actual project title.</p>
+          <p>Write your project description here.</p>
+        `
+      },
+      {
+        title: "Project Title Seven",
+        year: "2023",
+        medium: "Performance",
+        location: "London",
+        vimeoId: "VIMEO_ID",
+        tags: ["Performance", "Live", "2023"],
+        description: `
+          <p><em>Project Title Seven</em> — replace this with your actual project title.</p>
+          <p>Write your project description here.</p>
+        `
+      },
+      {
+        title: "Project Title Eight",
+        year: "2023",
+        medium: "Photography",
+        location: "London",
+        vimeoId: "VIMEO_ID",
+        tags: ["Photography", "Archive", "2023"],
+        description: `
+          <p><em>Project Title Eight</em> — replace this with your actual project title.</p>
+          <p>Write your project description here.</p>
+        `
+      },
+      {
+        title: "Project Title Nine",
+        year: "2022",
+        medium: "Sound",
+        location: "London",
+        vimeoId: "VIMEO_ID",
+        tags: ["Sound", "Installation", "2022"],
+        description: `
+          <p><em>Project Title Nine</em> — replace this with your actual project title.</p>
+          <p>Write your project description here.</p>
+        `
+      }
+    ];
+
+    // ════════════════════════════════════════
+    // STATE
+    // ════════════════════════════════════════
+    let currentProject = 0;
+
+    // ════════════════════════════════════════
+    // VIEW SWITCHING
+    // ════════════════════════════════════════
+    function setActiveNav(id) {
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+      if (id) document.getElementById(id).classList.add('active');
+    }
+
+    function showHome() {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById('view-home').classList.add('active');
+      document.getElementById('backBtn').style.display = 'none';
+      setActiveNav('nav-home');
+      window.scrollTo(0, 0);
+    }
+
+    function scrollToGrid() {
+      // If already on home, scroll to grid; otherwise show home first then scroll
+      if (document.getElementById('view-home').classList.contains('active')) {
+        document.getElementById('grid-anchor').scrollIntoView({ behavior: 'smooth' });
+      } else {
+        showHome();
+        setTimeout(() => {
+          document.getElementById('grid-anchor').scrollIntoView({ behavior: 'smooth' });
+        }, 50);
+      }
+    }
+
+    function showAbout() {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById('view-about').classList.add('active');
+      document.getElementById('backBtn').style.display = 'block';
+      setActiveNav('nav-about');
+      window.scrollTo(0, 0);
+    }
+
+    function showProject(index) {
+      currentProject = index;
+      const p = projects[index];
+
+      // populate
+      document.getElementById('proj-num').textContent = String(index + 1).padStart(2, '0') + ' / 09';
+      document.getElementById('proj-title').textContent = p.title;
+
+      document.getElementById('proj-meta').innerHTML = `
+        <div class="meta-item">${p.year}</div>
+        <div class="meta-item">${p.medium}</div>
+        <div class="meta-item">${p.location}</div>
+      `;
+
+      document.getElementById('proj-video').src =
+        `https://player.vimeo.com/video/${p.vimeoId}?title=0&byline=0&portrait=0&color=c8401a`;
+
+      document.getElementById('proj-tags').innerHTML =
+        p.tags.map(t => `<div class="tag">${t}</div>`).join('');
+
+      document.getElementById('proj-desc').innerHTML = p.description;
+
+      // prev / next
+      const prevEl = document.getElementById('proj-prev');
+      const nextEl = document.getElementById('proj-next');
+
+      if (index === 0) {
+        prevEl.querySelector('.proj-nav-dir').textContent = '← All Projects';
+        prevEl.querySelector('.proj-nav-title').textContent = 'Index';
+        prevEl.onclick = showHome;
+      } else {
+        prevEl.querySelector('.proj-nav-dir').textContent = '← Previous';
+        prevEl.querySelector('.proj-nav-title').textContent = projects[index - 1].title;
+        prevEl.onclick = () => showProject(index - 1);
+      }
+
+      if (index === projects.length - 1) {
+        nextEl.querySelector('.proj-nav-dir').textContent = 'All Projects →';
+        nextEl.querySelector('.proj-nav-title').textContent = 'Index';
+        nextEl.onclick = showHome;
+      } else {
+        nextEl.querySelector('.proj-nav-dir').textContent = 'Next →';
+        nextEl.querySelector('.proj-nav-title').textContent = projects[index + 1].title;
+        nextEl.onclick = () => showProject(index + 1);
+      }
+
+      // switch view
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById('view-project').classList.add('active');
+      document.getElementById('backBtn').style.display = 'block';
+      setActiveNav(null);
+      window.scrollTo(0, 0);
+    }
+
+    function navigateProject(dir) {
+      const next = currentProject + dir;
+      if (next < 0 || next >= projects.length) { showHome(); return; }
+      showProject(next);
+    }
+  </script>
+
+</body>
+</html>
