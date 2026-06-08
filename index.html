@@ -765,7 +765,8 @@ While trying to discover and explain problems, Huiyan enjoys building worlds, si
         year: "2024",
         medium: "Game",
         location: "London",
-        vimeoId: "emmOKUM3gTs",
+     
+        embedHtml: `<iframe width="560" height="315" src="https://www.youtube.com/embed/emmOKUM3gTs" allowfullscreen></iframe>`
         tags: ["Interactive", "Web", "2025"],
         description: `
           <p><em>The Lotus' Narrative</em>tells about the world of the Lotus Eaters, which is a tranquil haven that rejects grand narratives, embodying a longing to resist binary opposition and the suppression of individuality. This vision forms the narrative foundation of the project.</p>
@@ -903,16 +904,13 @@ While trying to discover and explain problems, Huiyan enjoys building worlds, si
         <div class="meta-item">${p.location}</div>
       `;
 
-     const videoSection = document.querySelector('.video-section');
-if (p.vimeoId) {
+const videoSection = document.querySelector('.video-section');
+if (p.embedHtml) {
+  videoSection.innerHTML = `<div class="vimeo-wrap">${p.embedHtml}</div>`;
+} else if (p.vimeoId) {
   videoSection.innerHTML = `<div class="vimeo-wrap"><iframe
     src="https://player.vimeo.com/video/${p.vimeoId}?title=0&byline=0&portrait=0&color=c8401a"
     allowfullscreen allow="autoplay; fullscreen; picture-in-picture"></iframe></div>`;
-} else if (p.youtubeId) {
-videoSection.innerHTML = `<div class="vimeo-wrap"><iframe
-  src="https://www.youtube.com/embed/${p.youtubeId}"
-  allowfullscreen
-  sandbox="allow-same-origin allow-scripts allow-presentation"></iframe></div>`;
 } else if (p.image) {
   videoSection.innerHTML = `<img src="${p.image}" style="width:100%;max-width:860px;display:block;margin:0 auto;">`;
 } else {
