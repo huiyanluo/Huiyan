@@ -912,8 +912,7 @@ if (p.vimeoId) {
 videoSection.innerHTML = `<div class="vimeo-wrap"><iframe
   src="https://www.youtube.com/embed/${p.youtubeId}"
   allowfullscreen
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`;
+  sandbox="allow-same-origin allow-scripts allow-presentation"></iframe></div>`;
 } else if (p.image) {
   videoSection.innerHTML = `<img src="${p.image}" style="width:100%;max-width:860px;display:block;margin:0 auto;">`;
 } else {
