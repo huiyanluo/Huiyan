@@ -30,15 +30,14 @@
 
     /* ── NAV ── */
     nav {
-      position: fixed;
+      position: absolute;
       top: 0; right: 0;
       z-index: 100;
       padding: 1.4rem 2rem;
       display: flex;
       gap: 2rem;
-      background: var(--bg);
-      border-bottom: 1px solid var(--line);
-      border-left: 1px solid var(--line);
+      
+
     }
 
     nav a {
@@ -56,7 +55,7 @@
     nav a.active { color: var(--accent); }
 
     .back-btn {
-      position: fixed;
+      position: absolute;
       top: 0; left: 0;
       z-index: 100;
       padding: 1.4rem 2rem;
@@ -67,12 +66,11 @@
       color: var(--mid);
       cursor: pointer;
       display: none;
-      background: var(--bg);
-      border-bottom: 1px solid var(--line);
-      border-right: 1px solid var(--line);
       transition: color 0.15s;
       border-left: none;
       outline: none;
+        background: none;
+  border: none;
     }
 
     .back-btn:hover { color: var(--accent); }
@@ -97,7 +95,7 @@
     }
 
     .hero::before {
-      content: 'YAN';
+      content: 'Huiyan';
       position: absolute;
       top: -0.15em; left: -0.02em;
       font-family: 'Barlow Condensed', sans-serif;
@@ -113,7 +111,7 @@
 
     .hero-name {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(5rem, 18vw, 14rem);
+      font-size: clamp(2rem, 8vw, 6rem);
       font-weight: 800;
       line-height: 0.88;
       letter-spacing: -0.03em;
@@ -173,9 +171,9 @@
       width: 100%; height: 100%;
       object-fit: cover;
       display: block;
-      opacity: 0.6;
+      opacity: 0.75;
       transition: opacity 0.4s ease, transform 0.5s ease;
-      filter: grayscale(60%) contrast(1.1);
+      filter: grayscale(20%) contrast(1.1);
     }
 
     .project-card:hover img { opacity: 0.25; transform: scale(1.03); }
@@ -242,7 +240,7 @@
 
     .project-title {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(3.5rem, 10vw, 9rem);
+      font-size: clamp(1rem, 3.5vw, 2rem);
       font-weight: 800;
       line-height: 0.88;
       letter-spacing: -0.02em;
@@ -266,6 +264,8 @@
       padding: 2rem;
       border-bottom: 1px solid var(--line);
       background: #080808;
+        max-width: 860px;  
+        margin: 0 auto;   
     }
 
     .vimeo-wrap {
@@ -522,7 +522,7 @@
   <!-- ════════ HOME VIEW ════════ -->
   <div class="view active" id="view-home">
     <header class="hero">
-      <h1 class="hero-name">Yan<span class="line2">Portfolio</span></h1>
+      <h1 class="hero-name">Huiyan Luo<span class="line2"></span></h1>
       <p class="hero-sub">Media Arts &amp; Critical Practice — London</p>
     </header>
 
@@ -533,83 +533,85 @@
 
     <main class="project-grid">
       <div class="project-card" onclick="showProject(0)">
-        <img src="images/01.jpg" alt="MATR" onerror="this.style.opacity='0'">
+        <img src="images/01.png" alt="Project 01" onerror="this.style.opacity='0'">
         <div class="card-info">
           <div class="card-num">01</div>
-          <div class="card-title">MATR</div>
-          <div class="card-tag">Installation · Dual-screen</div>
+          <div class="card-title">Maternal Intelligence</div>
+          <div class="card-tag">Film · Installation</div>
         </div>
       </div>
 
+      
+
       <div class="project-card" onclick="showProject(1)">
-        <img src="images/02.jpg" alt="Project 02" onerror="this.style.opacity='0'">
+        <img src="images/02.png" alt="Project 02" onerror="this.style.opacity='0'">
         <div class="card-info">
           <div class="card-num">02</div>
-          <div class="card-title">Project Title Two</div>
-          <div class="card-tag">Film · Performance</div>
+          <div class="card-title">Two perspective: From a bird to chaos</div>
+          <div class="card-tag">Film · Installation</div>
         </div>
       </div>
 
       <div class="project-card" onclick="showProject(2)">
-        <img src="images/03.jpg" alt="Project 03" onerror="this.style.opacity='0'">
+        <img src="images/03.png" alt="Project 03" onerror="this.style.opacity='0'">
         <div class="card-info">
           <div class="card-num">03</div>
-          <div class="card-title">Project Title Three</div>
-          <div class="card-tag">Interactive · Web</div>
+          <div class="card-title">The Lotus' Narrative</div>
+          <div class="card-tag">Video Game</div>
         </div>
       </div>
 
       <div class="project-card" onclick="showProject(3)">
-        <img src="images/04.jpg" alt="Project 04" onerror="this.style.opacity='0'">
+        <img src="images/04.png" alt="Project 04" onerror="this.style.opacity='0'">
         <div class="card-info">
           <div class="card-num">04</div>
-          <div class="card-title">Project Title Four</div>
-          <div class="card-tag">Research · Text</div>
+          <div class="card-title">100￥ Challenge</div>
+          <div class="card-tag">VR · Installation</div>
         </div>
       </div>
 
       <div class="project-card" onclick="showProject(4)">
-        <img src="images/05.jpg" alt="Project 05" onerror="this.style.opacity='0'">
+        <img src="images/05.png" alt="Project 05" onerror="this.style.opacity='0'">
         <div class="card-info">
           <div class="card-num">05</div>
-          <div class="card-title">Project Title Five</div>
-          <div class="card-tag">Game · Narrative</div>
+          <div class="card-title">Caution! The Klein Loop</div>
+          <div class="card-tag">Film · Performance</div>
         </div>
       </div>
 
       <div class="project-card" onclick="showProject(5)">
-        <img src="images/06.jpg" alt="Project 06" onerror="this.style.opacity='0'">
+        <img src="images/06.png" alt="Project 06" onerror="this.style.opacity='0'">
         <div class="card-info">
           <div class="card-num">06</div>
-          <div class="card-title">Project Title Six</div>
-          <div class="card-tag">Video · Essay</div>
+          <div class="card-title">Wandering Shanghai</div>
+          <div class="card-tag">Video Game</div>
         </div>
       </div>
 
       <div class="project-card" onclick="showProject(6)">
-        <img src="images/07.jpg" alt="Project 07" onerror="this.style.opacity='0'">
+        <img src="images/07.png" alt="Project 07" onerror="this.style.opacity='0'">
         <div class="card-info">
           <div class="card-num">07</div>
-          <div class="card-title">Project Title Seven</div>
-          <div class="card-tag">Performance · Live</div>
+          <div class="card-title">IPEV</div>
+          <div class="card-tag">Film · Installation</div>
         </div>
       </div>
 
       <div class="project-card" onclick="showProject(7)">
-        <img src="images/08.jpg" alt="Project 08" onerror="this.style.opacity='0'">
+        <img src="images/08.png" alt="Project 08" onerror="this.style.opacity='0'">
         <div class="card-info">
           <div class="card-num">08</div>
-          <div class="card-title">Project Title Eight</div>
-          <div class="card-tag">Photography · Archive</div>
+          <div class="card-title">Friend＄hip</div>
+          <div class="card-tag">Browser Extension</div>
         </div>
       </div>
 
       <div class="project-card" onclick="showProject(8)">
-        <img src="images/09.jpg" alt="Project 09" onerror="this.style.opacity='0'">
+        <img src="images/09.png" alt="Project 09" onerror="this.style.opacity='0'">
         <div class="card-info">
           <div class="card-num">09</div>
-          <div class="card-title">Project Title Nine</div>
-          <div class="card-tag">Sound · Installation</div>
+          <div class="card-title">Violencourage</div>
+          <div class="card-tag">Interative Installation</div>
         </div>
       </div>
     </main>
@@ -625,7 +627,7 @@
     <header class="project-header">
       <div>
         <div class="project-num-label" id="proj-num">01 / 09</div>
-        <h1 class="project-title" id="proj-title">MATR</h1>
+        <h1 class="project-title" id="proj-title">Maternal Intelligence</h1>
       </div>
       <div class="project-meta" id="proj-meta"></div>
     </header>
@@ -696,15 +698,11 @@
 
       <section class="bio-col">
         <p>
-          Your name is <em>Yan</em>. You are an interdisciplinary artist and researcher working at the intersection of critical media studies, feminist theory, AI ethics, and interactive installation.
-        </p>
+Huiyan is an interaction designer based in London, interested in how digital platforms shape the way people think, behave, and connect with each other. Her work explores the stories, interfaces, and systems behind everyday technologies, especially the ones that feel natural, friendly, or invisible.        </p>
         <p>
-          Your practice engages with how language, care, and relational logics are extracted and redeployed within computational systems — examining the political economy of AI discourse through installation, performance, film, and interactive text.
-        </p>
+          She is curious about how technologies are often humanised, mythologised, and presented as caring or intelligent, while the labour, power structures, and infrastructures behind them remain hidden. Through research-led design, moving image, games, and interactive installations, she investigates these tensions and turns them into experiences that people can see, feel, and question.</p>
         <p>
-          Currently based in London, you are completing an MFA programme at [Your Institution]. Your work has been shown at [Venue], [Venue], and [Venue]. You draw on theorists including Donna Haraway, Adrienne Rich, Sara Ruddick, and Simone Weil, as well as cyberfeminist and posthumanist traditions.
-        </p>
-        <p>This is a placeholder bio — replace it with your own words.</p>
+While trying to discover and explain problems, Huiyan enjoys building worlds, situations, and interactions that invite audiences to look at familiar technologies from different perspectives. For her, research is not the final goal but a starting point for creating new ways of seeing and experiencing the systems that shape contemporary life.        
 
         <div class="bio-details">
           <div class="detail-item">
@@ -735,40 +733,45 @@
     // ════════════════════════════════════════
     const projects = [
       {
-        title: "MATR",
+        title: "Maternal Intelligence",
         year: "2026",
-        medium: "Installation",
+        medium: "Film, Installation",
         location: "London",
-        vimeoId: "VIMEO_ID",
+        image: "images/01.png",
+        vimeoId: "",
         tags: ["Dual-Screen Installation", "Interactive", "AI / Feminist Theory", "2026"],
         description: `
-          <p><em>MATR</em> is a dual-screen installation that critiques how AI safety and alignment discourse appropriates the language of maternal instinct as a technical and rhetorical framework.</p>
+          <p><em>Maternal Intelligence</em> is a dual-screen installation that critiques how AI safety and alignment discourse appropriates the language of maternal instinct as a technical and rhetorical framework.</p>
           <p>The work presents two simultaneous views: a participant navigating what appears to be an AI companionship interface, and a backend administrative panel revealing the corporate logics behind it. The piece stages a double exposure — care as product, intimacy as data.</p>
           <p>Replace this text with your actual project description.</p>
         `
       },
       {
-        title: "Project Title Two",
-        year: "2025",
+        title: "Two perspectives: From a bird to chaos",
+        year: "2026",
         medium: "Film",
         location: "London",
-        vimeoId: "VIMEO_ID",
-        tags: ["Film", "Performance", "2025"],
+        vimeoId: "1199216710",
+        tags: ["Film", "Performance", "2026"],
         description: `
-          <p><em>Project Title Two</em> — replace this with your actual project title.</p>
-          <p>Write your project description here. This can be one or several paragraphs describing the concept, process, materials, context, and significance of the work.</p>
+          <p><em>Two perspectives: From a bird to chaos</em> was created in collaboration with the Autonomy Institute in London and exhibited at IKLECTIK as part of a design fiction programme exploring the political economy of space expansion.</p>
+          <p>Focusing on the theme of Waste and Unintentional Archives, the project examines the growing accumulation of human-made debris in orbit and asks what these discarded objects reveal about contemporary space development. Defunct satellites, rocket stages and abandoned equipment were never intended to function as records, yet they form an unintended archive of human activity, exposing patterns of extraction, consumption and the assumption that space can serve as an unlimited frontier for disposal.</p>
+          <p>The resulting work takes the form of a split-screen experimental film built from found footage, collage editing and archival materials. Structured as a parallel timeline, the film places bird nest building alongside the historical development of human space infrastructure. One screen traces key moments in space expansion, from the Cold War space race and satellite networks to commercial ventures such as SpaceX and the growing threat of orbital debris. The other follows shifts in nesting behaviour and materials, highlighting how ecological adaptation is shaped by human technological systems.</p>
+          <p>By juxtaposing these trajectories, the film uses the metaphor of the nest to explore questions of habitation, ownership and responsibility, drawing attention to the environmental consequences that accompany the expansion of human activity beyond Earth.</p>
         `
       },
       {
-        title: "Project Title Three",
-        year: "2025",
-        medium: "Interactive",
+        title: "The Lotus' Narrative",
+        year: "2024",
+        medium: "Game",
         location: "London",
-        vimeoId: "VIMEO_ID",
+        vimeoId: "emmOKUM3gTs",
         tags: ["Interactive", "Web", "2025"],
         description: `
-          <p><em>Project Title Three</em> — replace this with your actual project title.</p>
-          <p>Write your project description here.</p>
+          <p><em>The Lotus' Narrative</em>tells about the world of the Lotus Eaters, which is a tranquil haven that rejects grand narratives, embodying a longing to resist binary opposition and the suppression of individuality. This vision forms the narrative foundation of the project.</p>
+          <p>The project examines how China's pursuit of collective achievement and efficiency often neglects individual experiences and attributes, critically reflecting on the rationale of grand narratives built on suppressing individual differences. The game follows an Odyssean crew member tasked with the grand mission of locating lost comrades. However, within the realm of the Lotus Eaters, they come to understand the profound significance of personal experiences and micro-narratives, ultimately choosing to stay and abandon collective conformity.</p>
+          <p>Through a decentralized interactive experience, the game invites players to question grand narratives, appreciate individual perspectives, and reconsider the meaning of personal value and identity.</p>
+          
         `
       },
       {
@@ -900,8 +903,22 @@
         <div class="meta-item">${p.location}</div>
       `;
 
-      document.getElementById('proj-video').src =
-        `https://player.vimeo.com/video/${p.vimeoId}?title=0&byline=0&portrait=0&color=c8401a`;
+     const videoSection = document.querySelector('.video-section');
+if (p.vimeoId) {
+  videoSection.innerHTML = `<div class="vimeo-wrap"><iframe
+    src="https://player.vimeo.com/video/${p.vimeoId}?title=0&byline=0&portrait=0&color=c8401a"
+    allowfullscreen allow="autoplay; fullscreen; picture-in-picture"></iframe></div>`;
+} else if (p.youtubeId) {
+videoSection.innerHTML = `<div class="vimeo-wrap"><iframe
+  src="https://www.youtube.com/embed/${p.youtubeId}"
+  allowfullscreen
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`;
+} else if (p.image) {
+  videoSection.innerHTML = `<img src="${p.image}" style="width:100%;max-width:860px;display:block;margin:0 auto;">`;
+} else {
+  videoSection.innerHTML = '';
+}
 
       document.getElementById('proj-tags').innerHTML =
         p.tags.map(t => `<div class="tag">${t}</div>`).join('');
