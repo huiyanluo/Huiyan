@@ -152,16 +152,14 @@
 
 .project-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
   padding: 2rem;
-  max-width: 1000px;
-  margin: 0 auto;
 }
     .project-card {
       position: relative;
-      border-right: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
+
       overflow: hidden;
       cursor: pointer;
       aspect-ratio: 4/3;
